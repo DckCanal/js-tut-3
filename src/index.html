@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+    <h1>💖 Hello World!</h1>
+    <p>Welcome to your Electron application.</p>
+    <button id="openBtn">Apri</button>
+    <input type="text" id="fileName" value="" placeholder="Percorso">
+    <p id="content"></p>
+    <script>
+      let $ = require("jquery")
+      const {ipcRenderer} = require("electron")
+      $('#openBtn').on('click',() =>{
+        ipcRenderer.send('openFile')
+      })
+      ipcRenderer.on('err',(event,err) => {
+        alert("Error: "+err)
+      })
+      ipcRenderer.on('file',(event,data) => {
+        $('#content').text(data.toString())
+      })
+      ipcRenderer.on('cazzius',(event,data)=>{
+        alert("Cazzius!")
+      })
+    </script>
+  </body>
+</html>
